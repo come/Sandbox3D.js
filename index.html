@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9" />
+	<title>Wanadev Research : Plan3D</title>
+	<style>
+		body {
+			margin: 0; padding: 0; overflow: hidden;
+		}
+		container {
+			width: 100%; height: 100%; margin: 0; padding: 0;
+		}
+	</style>
+</head>
+<body>
+<div id="container"></div>
+<script src="js/three.r53.js"></script>
+<script src="js/ujs.js"></script>
+<script src="js/KeyboardState.js"></script>
+<script src="js/MouseCamera.js"></script>
+<script>
+	var container = ujs.getById("container");
+	var width = window.innerWidth;
+	var height = window.innerHeight;
+	var fieldOfView = 60;
+	var aspectRatio = width / height;
+	var renderer, camera, scene;
+
+	initialize();
+	mainLoop();
+	
+	function initialize() {
+		try {
+			renderer = new THREE.WebGLRenderer();
+		} 
+		catch (exception) {
+			renderer = new THREE.CanvasRenderer();
+		}
+		
+		renderer.setSize(width, height);
+		renderer.setClearColorHex(0xffffff, 1);
+		container.appendChild(renderer.domElement);
+		
+		scene = new THREE.Scene();
+		
+		camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, 1, 5000);
+		camera.position.set(0, 100, 200);
+		camera.lookAt(scene.position);
+		
+		var groundTexture = THREE.ImageUtils.loadTexture("images/ground.jpg");
+		groundTexture.wrapS = THREE.RepeatWrapping;
+		groundTexture.wrapT = THREE.RepeatWrapping;
+		groundTexture.repeat.x = 8;
+		groundTexture.repeat.y = 8;
+		var ground = new THREE.Mesh(new THREE.CubeGeometry(500, 1, 500), new THREE.MeshBasicMaterial({ map: groundTexture }));
+		scene.add(ground);
+		
+		var skyTexture = THREE.ImageUtils.loadTexture("images/sky.jpg");
+		var background = new THREE.Mesh(new THREE.SphereGeometry(500, 16, 16), new THREE.MeshBasicMaterial({ map: skyTexture }));
+		background.material.side = THREE.DoubleSide;
+		
+		scene.add(background);console.log(background);
+	}
+	
+	function update() {
+	
+	}
+	
+	function mainLoop() {
+		requestAnimationFrame(mainLoop);
+		update();
+		renderer.render(scene, camera);
+	}	
+	
+</script>
+</body>
+</html>
