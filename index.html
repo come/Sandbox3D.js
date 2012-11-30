@@ -16,6 +16,7 @@
 <body>
 <div id="container"></div>
 <script src="js/vendors/three.js"></script>
+<script src="js/vendors/THREE.DragControls.js"></script>
 <script src="js/vendors/ujs.js"></script>
 <script src="js/utils/MouseState.js"></script>
 <script src="js/utils/KeyboardState.js"></script>
@@ -52,10 +53,10 @@
 	function testCube() {
 		var cube1 = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50), new THREE.MeshBasicMaterial({color: 0xff0000}));
 		cube1.position.set(-50, 0, 50);
-		engine.scene.add(cube1);
+		engine.addDraggableObject(cube1);
 
 		var cube2 = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50), new THREE.MeshBasicMaterial({color: 0x00ff00}));
-		engine.scene.add(cube2);
+		engine.addDraggableObject(cube2);
 	}
 	
 	// Main loop

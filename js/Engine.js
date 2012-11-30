@@ -43,6 +43,10 @@ var Engine = function (container) {
 		buttonsMap: { move: 1, rotate: 2 }
 	});
 
+	this.draggableObjects = [];
+	this.dragControls = new THREE.DragControls(this.camera, this.draggableObjects, this.renderer.domElement);
+	this.dragControls.constrains("xz");
+
 	this.initialize();
 };
 
@@ -72,6 +76,11 @@ Engine.prototype.update = function (elapsedTime) {
 Engine.prototype.draw = function (elapsedTime) {
 	this.renderer.render(this.scene, this.camera);
 };
+
+Engine.prototype.addDraggableObject = function (object) {
+	this.draggableObjects.push(object);
+	this.scene.add(object);
+}
 
 Engine.prototype.repeatTexture = function (texture, x, y) {
 	texture.wrapS = THREE.RepeatWrapping;
