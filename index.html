@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Sandbox3d.js : A simple sandbox for playing with Three.js" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Sandbox3d.js</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/demonixis/Sandbox3D.js">View on GitHub</a>
+
+          <h1 id="project_title">Sandbox3d.js</h1>
+          <h2 id="project_tagline">A simple sandbox for playing with Three.js</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/demonixis/Sandbox3D.js/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/demonixis/Sandbox3D.js/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Sandbox3D.js</h1>
+
+<p>A simple sandbox for playing with Three.js</p>
+
+<p>You can use the mouse for moving the camera around the scene with left button and zoom with the wheel button.</p>
+
+<p>The engine use WebGL for rendering but if the browser don't support it, a fallback with a CanvasRenderer is used.</p>
+
+<p>This sandbox can be use on modern browsers (even Intenet Explorer 9)</p>
+
+<h4>How to use it</h4>
+
+<div class="highlight"><pre><span class="c1">// Setup the engine</span>
+<span class="kd">var</span> <span class="nx">container</span> <span class="o">=</span> <span class="nx">ujs</span><span class="p">.</span><span class="nx">getById</span><span class="p">(</span><span class="s2">"container"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">engine</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Engine</span><span class="p">(</span><span class="nx">container</span><span class="p">);</span>
+<span class="nx">createScene</span><span class="p">();</span>
+
+<span class="c1">// Your test code in this function</span>
+<span class="kd">function</span> <span class="nx">createScene</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Your code here</span>
+
+    <span class="c1">// Create a blue cube and add it to the scene</span>
+    <span class="kd">var</span> <span class="nx">mesh</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">THREE</span><span class="p">.</span><span class="nx">Mesh</span><span class="p">(</span><span class="k">new</span> <span class="nx">THREE</span><span class="p">.</span><span class="nx">CubeGeometry</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="k">new</span> <span class="nx">THREE</span><span class="p">.</span><span class="nx">MeshPhongMaterial</span><span class="p">({</span> <span class="nx">color</span><span class="o">:</span> <span class="mh">0x008800</span> <span class="p">}));</span>
+    <span class="nx">engine</span><span class="p">.</span><span class="nx">scene</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">mesh</span><span class="p">);</span> <span class="c1">// That's it :)</span>
+<span class="p">}</span>
+
+<span class="c1">// Main loop</span>
+<span class="p">(</span><span class="kd">function</span> <span class="nx">mainLoop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">mainLoop</span><span class="p">);</span>
+    <span class="nx">engine</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="nx">engine</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">})();</span>   
+</pre></div>
+
+<h4>What objects are available ?</h4>
+
+<div class="highlight"><pre><span class="nx">engine</span><span class="p">.</span><span class="nx">scene</span> <span class="c1">// The scene</span>
+<span class="nx">engine</span><span class="p">.</span><span class="nx">camera</span> <span class="c1">// The camera </span>
+<span class="nx">engine</span><span class="p">.</span><span class="nx">renderer</span> <span class="c1">// The default renderer (WebGL or Canvas)</span>
+<span class="nx">engine</span><span class="p">.</span><span class="nx">mouseState</span> <span class="c1">// Object helper for working with mouse</span>
+<span class="nx">engine</span><span class="p">.</span><span class="nx">keyboardState</span> <span class="c1">// Object helper for working with keyboard</span>
+</pre></div>
+
+<p>So you've full access to Three.js</p>
+
+<h3>Licence</h3>
+
+<p>MIT license, check the license file for more informations</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Sandbox3d.js maintained by <a href="https://github.com/demonixis">demonixis</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
