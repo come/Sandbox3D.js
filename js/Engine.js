@@ -74,3 +74,7 @@ Engine.prototype.repeatTexture = function (texture, x, y) {
 	texture.repeat.y = 8;
 	return texture;
 };
+
+Engine.prototype.isWebGLAvailable = function () {
+	return (this.renderer instanceof THREE.WebGLRenderer);
+}

@@ -22,34 +22,38 @@
 <script src="js/utils/MouseCamera.js"></script>
 <script src="js/Engine.js"></script>
 <script>
+	// Setup the engine
 	var container = ujs.getById("container");
 	var engine = new Engine(container);
 	createScene();
-	mainLoop();
 	
+	// Your test code in this function
 	function createScene() {
+		// Create a ground
 		var groundTexture = THREE.ImageUtils.loadTexture("images/ground.jpg");
 		engine.repeatTexture(groundTexture, 8, 8);
 		var material = new THREE.MeshBasicMaterial({ map: groundTexture });
-		if (engine.renderer instanceof THREE.CanvasRenderer) {
+
+		// Don't use a texture if it's
+		if (!engine.isWebGLAvailable()) {
 			material = new THREE.MeshBasicMaterial({color: 0x6C85B7});
 		}
 		var ground = new THREE.Mesh(new THREE.CubeGeometry(500, 1, 500), material);
 		engine.scene.add(ground);
 		
+		// Create a sky sphere
 		var skyTexture = THREE.ImageUtils.loadTexture("images/sky.jpg");
 		var background = new THREE.Mesh(new THREE.SphereGeometry(500, 16, 16), new THREE.MeshBasicMaterial({ map: skyTexture }));
 		background.material.side = THREE.DoubleSide;
-		
 		engine.scene.add(background);
 	}
 	
-
-	function mainLoop() {
+	// Main loop
+	(function mainLoop() {
 		requestAnimationFrame(mainLoop);
 		engine.update(1);
 		engine.draw(1);
-	}	
+	})();	
 	
 </script>
 </body>
