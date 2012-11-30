@@ -1,56 +1,54 @@
-var KeyboardState = {};
+var KeyboardState = function(params) {
+	this.initialized = false;
 
-(function() {  
-  KeyboardState = function(params) {
-    this.initialized = false;
-	
-    var params = params || {};
-	
+	var params = params || {};
+
 	this.preventDefault = params.preventDefault || false;
-	
-    this.keys = { 
-        up: false, down: false, left: false, right: false, escape: false,
-        space: false, enter: false, control: false, alt: false, shift: false,
-        num_0: false, num_1: false, num_2: false, num_3: false, num_4: false, 
-        num_5: false, num_6: false, num_7: false, num_8: false, num_9: false,
-        a: false, b: false, c: false, d: false, e: false, f: false, g: false,
-        h: false, i: false, j: false, k: false, l: false, m: false, n: false,
-        o: false, p: false, q: false, r: false, s: false, t: false, u: false,
-        v: false, w: false, x: false, y: false, z: false, 
-        k_0: false, k_1: false, k_2: false, k_3: false, k_4: false, 
-        k_5: false, k_6: false, k_7: false, k_8: false, k_9: false
-    };    
-    
-    this.initialize();
-  };
-  
-  KeyboardState.prototype.initialize = function () {
-    if (!this.initialized) {
-      this.initialized = true;
+
+	this.keys = { 
+	    up: false, down: false, left: false, right: false, escape: false,
+	    space: false, enter: false, control: false, alt: false, shift: false,
+	    num_0: false, num_1: false, num_2: false, num_3: false, num_4: false, 
+	    num_5: false, num_6: false, num_7: false, num_8: false, num_9: false,
+	    a: false, b: false, c: false, d: false, e: false, f: false, g: false,
+	    h: false, i: false, j: false, k: false, l: false, m: false, n: false,
+	    o: false, p: false, q: false, r: false, s: false, t: false, u: false,
+	    v: false, w: false, x: false, y: false, z: false, 
+	    k_0: false, k_1: false, k_2: false, k_3: false, k_4: false, 
+	    k_5: false, k_6: false, k_7: false, k_8: false, k_9: false
+	};    
+
+	this.initialize();
+};
+
+KeyboardState.prototype.initialize = function () {
+	if (!this.initialized) {
+	  this.initialized = true;
 	  var that = this;
-      window.addEventListener("keydown", function (e) { that.onKeyboardStateChange(e, that); }, false);
-      window.addEventListener("keyup", function (e) { that.onKeyboardStateChange(e, that); }, false);
-    }
-  };
-  
-  KeyboardState.prototype.destroy = function () {
-    if (this.initialized) {
-      this.initialized = false;
-	  var that = this;
-      window.removeEventListener('keydown', function (e) { that.onKeyboardStateChange(e, that); });
-      window.removeEventListener('keyup', function (e) { that.onKeyboardStateChange(e, that); });
-    }
-  };
-  
-  KeyboardState.prototype.onKeyboardStateChange = function (event, context) {
-    if (context.preventDefault) {
-      event.preventDefault();
+	  window.addEventListener("keydown", function (e) { that.onKeyboardStateChange(e, that); }, false);
+	  window.addEventListener("keyup", function (e) { that.onKeyboardStateChange(e, that); }, false);
 	}
-    
-    var pressed = event.type == "keydown" ? true : false;
+};
+
+KeyboardState.prototype.destroy = function () {
+	if (this.initialized) {
+	  this.initialized = false;
+	  var that = this;
+	  window.removeEventListener('keydown', function (e) { that.onKeyboardStateChange(e, that); });
+	  window.removeEventListener('keyup', function (e) { that.onKeyboardStateChange(e, that); });
+	}
+};
+
+KeyboardState.prototype.onKeyboardStateChange = function (event, context) {
 	
-    switch (event.keyCode)
-    {
+	if (context.preventDefault) {
+	  event.preventDefault();
+	}
+
+	var pressed = event.type == "keydown" ? true : false;
+
+	switch (event.keyCode)
+	{
 		case 13: context.keys.enter = pressed; break; // Entrer
 		case 16: context.keys.shift = pressed; break; // Shift    
 		case 17: context.keys.control = pressed; break; // Control
@@ -107,10 +105,9 @@ var KeyboardState = {};
 		case 103: context.keys.num_7 = pressed; break; // Pad 7
 		case 104: context.keys.num_8 = pressed; break; // Pad 8
 		case 105: context.keys.num_9 = pressed; break; // Pad 9
-    }
-  };
-  
-  KeyboardState.prototype.pressed = function (key) {
-  	return this.keys[key];
-  };
-})();
+	}
+};
+
+KeyboardState.prototype.pressed = function (key) {
+	return this.keys[key];
+};

@@ -28,12 +28,12 @@ var MouseCamera = {};
         };
 
         this.theta = 0;
-        this.radius = 700;
+        this.radius = params.radius || 700;
 
         this.lookPoint = {
-            x: lookAtPosition.x,
-            y: lookAtPosition.y,
-            z: lookAtPosition.z
+            x: this.lookAtPosition.x,
+            y: this.lookAtPosition.y,
+            z: this.lookAtPosition.z
         };
 
         this.phi = {
@@ -105,7 +105,7 @@ var MouseCamera = {};
     MouseCamera.prototype.resetControl = function () {
         this.theta = 0;
         this.phi.value = 45;
-        this.radius = 700;
+        this.radius = 400;
         this.animation.leftRight = false;
         this.reset = false;
         this.updateCameraPosition();
@@ -237,6 +237,7 @@ var MouseCamera = {};
             if (this.reset) {
                 this.resetControl();
             }
+
             if (this.mouse.button != this.buttonsMap.move) {
                 var lookPoint = this.lookAtPosition.clone();
                 lookPoint.y = this.lookPoint.y;

@@ -15,62 +15,40 @@
 </head>
 <body>
 <div id="container"></div>
-<script src="js/three.r53.js"></script>
-<script src="js/ujs.js"></script>
-<script src="js/KeyboardState.js"></script>
-<script src="js/MouseCamera.js"></script>
+<script src="js/vendors/three.r53.js"></script>
+<script src="js/vendors/ujs.js"></script>
+<script src="js/utils/MouseState.js"></script>
+<script src="js/utils/KeyboardState.js"></script>
+<script src="js/utils/MouseCamera.js"></script>
+<script src="js/Engine.js"></script>
 <script>
 	var container = ujs.getById("container");
-	var width = window.innerWidth;
-	var height = window.innerHeight;
-	var fieldOfView = 60;
-	var aspectRatio = width / height;
-	var renderer, camera, scene;
-
-	initialize();
+	var engine = new Engine(container);
+	createScene();
 	mainLoop();
 	
-	function initialize() {
-		try {
-			renderer = new THREE.WebGLRenderer();
-		} 
-		catch (exception) {
-			renderer = new THREE.CanvasRenderer();
-		}
-		
-		renderer.setSize(width, height);
-		renderer.setClearColorHex(0xffffff, 1);
-		container.appendChild(renderer.domElement);
-		
-		scene = new THREE.Scene();
-		
-		camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, 1, 5000);
-		camera.position.set(0, 100, 200);
-		camera.lookAt(scene.position);
-		
+	function createScene() {
 		var groundTexture = THREE.ImageUtils.loadTexture("images/ground.jpg");
-		groundTexture.wrapS = THREE.RepeatWrapping;
-		groundTexture.wrapT = THREE.RepeatWrapping;
-		groundTexture.repeat.x = 8;
-		groundTexture.repeat.y = 8;
-		var ground = new THREE.Mesh(new THREE.CubeGeometry(500, 1, 500), new THREE.MeshBasicMaterial({ map: groundTexture }));
-		scene.add(ground);
+		engine.repeatTexture(groundTexture, 8, 8);
+		var material = new THREE.MeshBasicMaterial({ map: groundTexture });
+		if (engine.renderer instanceof THREE.CanvasRenderer) {
+			material = new THREE.MeshBasicMaterial({color: 0x6C85B7});
+		}
+		var ground = new THREE.Mesh(new THREE.CubeGeometry(500, 1, 500), material);
+		engine.scene.add(ground);
 		
 		var skyTexture = THREE.ImageUtils.loadTexture("images/sky.jpg");
 		var background = new THREE.Mesh(new THREE.SphereGeometry(500, 16, 16), new THREE.MeshBasicMaterial({ map: skyTexture }));
 		background.material.side = THREE.DoubleSide;
 		
-		scene.add(background);console.log(background);
+		engine.scene.add(background);
 	}
 	
-	function update() {
-	
-	}
-	
+
 	function mainLoop() {
 		requestAnimationFrame(mainLoop);
-		update();
-		renderer.render(scene, camera);
+		engine.update(1);
+		engine.draw(1);
 	}	
 	
 </script>
