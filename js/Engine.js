@@ -47,6 +47,7 @@ var Engine = function (container) {
 
 Engine.prototype.initialize = function () {
 	if (!this.initialized) {
+		var that = this;
 		window.addEventListener("resize", function (event) { 
 			that.width = window.innerWidth;
 			that.height = window.innerHeight;
