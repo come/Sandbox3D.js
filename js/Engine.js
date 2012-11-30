@@ -29,6 +29,7 @@ var Engine = function (container) {
 
 	this.mouseState = new MouseState(this.renderer.domElement);
 	this.mouseState.startEventListening();
+
     this.keyboardState = new KeyboardState();   
     
 	this.mouseCamera = new MouseCamera({
@@ -39,7 +40,7 @@ var Engine = function (container) {
 		keyboardState: this.keyboardState,
 		renderer: this.renderer,
 		radius: 200,
-		buttonMap: { move: 1, rotate: 2 }
+		buttonsMap: { move: 1, rotate: 2 }
 	});
 
 	this.initialize();
@@ -52,8 +53,12 @@ Engine.prototype.initialize = function () {
 			that.width = window.innerWidth;
 			that.height = window.innerHeight;
 			that.aspectRatio = that.width / that.height;
-			that.camera.aspect = that.aspectRatio;
-			that.camera.updateProjectMatrix(); 
+			that.renderer.setSize(that.width, that.height);
+			that.camera.aspect = that.aspectRatio; 
+		}, false);
+
+		document.addEventListener("contextmenu", function (event) {
+			event.preventDefault();
 		}, false);
 		this.initialized = true;
 	}

@@ -15,11 +15,6 @@ var MouseCamera = {};
         this.enabled = true;
         this.initialized = false;
         this.force = false;
-        this.positionOffset = {
-            x: 0,
-            y: 0,
-            z: 0
-        };
 
         var buttonsMap = params.buttonsMap || {};
         this.buttonsMap = {
@@ -185,7 +180,7 @@ var MouseCamera = {};
 
     MouseCamera.prototype.update = function (deltaTime) {
         if (this.enabled) {
-            if (this.mouse.drag && (this.mouse.button == this.buttonsMap.rotate || this.mouse.button == this.buttonsMap.move)) {
+            if (this.mouse.drag && (this.mouse.button == this.buttonsMap.rotate)) {
                 if (this.mouse.button == this.buttonsMap.move) {
                     this.phi.value += this.mouse.delta.y / 8;
                     this.theta -= this.mouse.delta.x / 8;
@@ -247,9 +242,9 @@ var MouseCamera = {};
     }
 
     MouseCamera.prototype.updateCameraPosition = function () {
-        this.camera.position.x = this.lookAtPosition.x + this.radius * Math.sin(this.theta * Math.PI / 360) * Math.cos(this.phi.value * Math.PI / 360) + this.positionOffset.x;
-        this.camera.position.y = this.lookAtPosition.y + this.lookPoint.y + this.radius * Math.sin(this.phi.value * Math.PI / 360) + this.positionOffset.y;
-        this.camera.position.z = this.lookAtPosition.z + this.radius * Math.cos(this.theta * Math.PI / 360) * Math.cos(this.phi.value * Math.PI / 360) + this.positionOffset.z;
+        this.camera.position.x = this.lookAtPosition.x + this.radius * Math.sin(this.theta * Math.PI / 360) * Math.cos(this.phi.value * Math.PI / 360);
+        this.camera.position.y = this.lookAtPosition.y + this.lookPoint.y + this.radius * Math.sin(this.phi.value * Math.PI / 360);
+        this.camera.position.z = this.lookAtPosition.z + this.radius * Math.cos(this.theta * Math.PI / 360) * Math.cos(this.phi.value * Math.PI / 360);
 
         this.camera.updateMatrix();
     }
