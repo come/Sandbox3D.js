@@ -119,11 +119,11 @@ THREE.DragControls = function(_camera, _objects, _domElement, params) {
         _mouse.x = ((event.clientX + _offsets.x) / _screenSizes.width) * 2 - 1;
 	    _mouse.y = - ((event.clientY + _offsets.y) / _screenSizes.height) * 2 + 1;
 
-        var ray = _projector.pickingRay(_mouse, _camera);
+        var rayCaster = _projector.pickingRay(_mouse, _camera);
 
         if (me.enabled && _selected) {
-          
-            var targetPos = ray.direction.clone().multiplyScalar(_selected.distance).addSelf(ray.origin);
+
+            var targetPos = rayCaster.ray.direction.clone().multiplyScalar(_selected.distance).addSelf(rayCaster.ray.origin);
             targetPos.subSelf(_offset);
             // _selected.object.position.copy(targetPos.subSelf(_offset));
                    
@@ -151,7 +151,7 @@ THREE.DragControls = function(_camera, _objects, _domElement, params) {
             _dragging = false;
         }
 
-        var intersects = ray.intersectObjects(_objects);
+        var intersects = rayCaster.intersectObjects(_objects);
 
         if (intersects.length > 0) {
 
